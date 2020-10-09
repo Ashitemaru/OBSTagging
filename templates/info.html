@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>THUNLP Data Labeling Platform - THUNLP 数据标注平台</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+        body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #eee;
+        }
+
+        form {
+        padding: 15px;
+        margin: 0 auto;
+        }
+        form .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+        }
+        form .form-control:focus {
+        z-index: 2;
+        }
+        form input {
+        margin-bottom: 10px;
+        }
+    </style>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/js/md5.min.js"></script>
+    <script>
+    function imgclick() {
+	    $.ajax({
+				type:"post",
+				url:"https://api.freetest.net.cn/getcode",	//FreeTest 接口
+				data:{"appid":1000, "type":1, "sign":"4896E104C73A7C31EC40FE9762D24B59"},
+				success:function(res){
+			    var json_obj = JSON.parse(res);
+					var ft_token = json_obj.token; 
+					var ft_url = "https://" +json_obj.url;
+					$("#codeimg").attr("src", ft_url);
+          $("#ft_token").attr("value", ft_token);
+				}
+			});
+		}
+    function getCookie(name) {
+      var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+      return r ? r[1] : undefined;
+    }
+    function check_name(input) {
+      input.setCustomValidity("");
+      $(input).removeClass("is-invalid");
+      reg=/^[\u4e00-\u9fa5_a-zA-Z0-9-]{4,16}$/g;
+      if (!reg.test(input.value)) {
+          $(input).addClass("is-invalid");
+          input.setCustomValidity("Invalid Username.");
+          input.reportValidity();
+      } else {
+        $.ajax({
+          type: "post",
+          url: "/check_name",
+          data: {"username": input.value, "_xsrf": getCookie("_xsrf")},
+          success: function(res) {
+            var json_obj = JSON.parse(res);
+            var status = json_obj.status;
+            if ("failed" == status) {
+              input.setCustomValidity("User existed.");
+              $(input).addClass("is-invalid");
+            }
+          }
+        });
+      }
+    }
+    function check_pass(input) {
+      input.setCustomValidity("");
+      $(input).removeClass("is-invalid");
+      reg=/^[_a-zA-Z0-9]{4,16}$/g;
+      if (!reg.test(input.value)) {
+          $(input).addClass("is-invalid");
+          input.setCustomValidity("Invalid password.");
+          input.reportValidity();
+      } 
+    }
+    function check_confirm_pass(input) {
+      input.setCustomValidity("");
+      $(input).removeClass("is-invalid");
+      if (input.value != $("#password").val()) {
+          $(input).addClass("is-invalid");
+          input.setCustomValidity("Password mismatch.");
+          input.reportValidity(); 
+      }
+      
+    }
+    function submit_form() {
+      var user = document.getElementById("username").value;
+      var pass = document.getElementById("password").value;
+      document.getElementById("password").value = md5(user + ';' + pass);
+    }
+
+    </script>
+  </head>
+
+  <body>
+
+    <div></div>
+    <div class="container">
+      {% if globals().get('alert_msg') %}
+      <div class="alert alert-danger" role="alert">
+        {{ alert_msg }}
+      </div>
+      {% end %}
+      <form method="POST" class="needs-validation" novalidate onsubmit="submit_form()">
+        <h3>注册</h3><br>
+        <div class="form-group row">
+          <label for="username" class="col-sm-2 col-form-label">用户名 (*)</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="{{u_name}}" required oninput="check_name(this)" disabled="disabled">
+          </div>
+          <div class="col-sm-6">
+            <p>请输入4-16个字符，包括字母、数字和下划线，当输入框边框为红色时，代表此用户名已被使用，请使用其他用户名</p>
+          </div>
+        </div>
+        <!-- <div class="form-group row">
+          <label for="password" class="col-sm-2 col-form-label">密码 (*)</label>
+          <div class="col-sm-4">
+            <input type="password" class="form-control" name=password id="password" placeholder="Password" required oninput="check_pass(this)">
+          </div>
+          <div class="col-sm-6">
+            <p>请输入4-16个字符，包括字母、数字和下划线</p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password2" class="col-sm-2 col-form-label">密码确认 (*)</label>
+          <div class="col-sm-4">
+            <input type="password" class="form-control" id="password2" placeholder="Password" required oninput="check_confirm_pass(this)">
+          </div>
+        </div> -->
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">邮箱 (*)</label>
+          <div class="col-sm-4">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{u_email}}" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="student_id" class="col-sm-2 col-form-label">学号/工作证号</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" id="student_id" name="student_id" placeholder="Student Id" value="{{u_studentid}}">
+          </div>
+          <div class="col-sm-6">
+            <p>如果您来自清华大学，请输入您的学号或工作证号</p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="alipay" class="col-sm-2 col-form-label">支付宝账号</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="alipay" name="alipay" value="{{u_alipay}}">
+          </div>
+          <div class="col-sm-6">
+            <p>请输入您的支付宝账号以便后期发放劳务费用</p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="valid_name" class="col-sm-2 col-form-label">真实姓名</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="valid_name" name="valid_name" value="{{u_valid_name}}">
+          </div>
+          <div class="col-sm-6">
+            <p>请输入您的真实姓名以便通过支付宝转账实名认证</p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="wechat" class="col-sm-2 col-form-label">微信号</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="wechat" name="wechat" value="{{u_wechat}}">
+          </div>
+          <div class="col-sm-6">
+            <p>如果没有支付宝账号，请输入微信号以便通过微信发放劳务费，预期发放周期相对更长</p>
+          </div>
+        </div>
+        <!-- <div class="form-group row">
+          <label for="ft_value" class="col-sm-2 col-form-label">Captcha (*)</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="ft_value" name="ft_value" placeholder="Input letters in the image" required>
+          </div>
+          <div class="col-sm-6">
+            <img id="codeimg" src="" onclick="imgclick()">
+          </div>
+        </div> -->
+        <input type="hidden" id="ft_token" name="ft_token" />
+        <div class="row">
+          <button type="submit" class="btn btn-primary btn-lg col-sm-2">提交修改</button>
+        </div>
+        {% raw xsrf_form_html() %}
+      </form>
+
+    </div> <!-- /container -->
+
+    <script>
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+            }, false);
+          });
+        imgclick();
+      },false);
+    })();
+    
+    </script>
+  </body>
+</html>

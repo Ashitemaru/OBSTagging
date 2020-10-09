@@ -1,0 +1,28 @@
+
+<html>
+<head>
+<script type="text/javascript" src="https://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+ 
+<script type="text/javascript">
+
+
+function changevalue(content) {
+	console.log(content);
+	$("[id^='" + content+ "']").attr('value')
+	if ($("[id^='" + content+ "']").attr('value') == '0') {
+		$("[id^='" + content+ "']").attr('value', '1');
+		$("[id^='" + content+ "']").attr('style', 'opacity:1.0;filter:sepia(500);filter:contrast(0.5);');
+	} else {
+		$("[id^='" + content+ "']").attr('value', '0');
+		$("[id^='" + content+ "']").attr('style', '');
+	}
+}
+
+</script>
+</head>
+ 
+<body>
+<img id="button0" src="./oracle/00002/1/00002-2-1-0.png" width="8%" value="0" onclick="changevalue('button0')">
+ 
+</body>
+</html>

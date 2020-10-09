@@ -1,0 +1,161 @@
+<!DOCTYPE doctype html>
+<html lang="zh">
+    <head>
+        <title>
+            THUNLP Data Labeling Platform - THUNLP 数据标注平台
+        </title>
+        <script src="https://libs.baidu.com/jquery/2.1.1/jquery.min.js">
+        </script>
+        <meta charset="utf-8">
+            <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+                <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" rel="stylesheet">
+                    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" rel="stylesheet"/>
+                    <style>
+                    </style>
+                </link>
+            </meta>
+        </meta>
+        
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <a class="navbar-brand" href="#">
+                THUNLP标注平台
+            </a>
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <span class="navbar-text active">
+            
+             <a class="nav-link" href="/info?action=info">
+                账户信息
+            </a>
+            </span>
+            <span class="navbar-text active">
+                
+                <a class="nav-link" href="/login?action=logout">
+                    注销
+                </a>
+            </span>
+        </nav>
+        <main class="container" role="main">
+            <div class="jumbotron">
+                <h1>
+                    你好 {{ username }}!
+                </h1>
+                <p class="lead">
+                    欢迎来到清华大学自然语言处理与社会人文计算实验室（THUNLP）数据标注平台。
+                    <br>
+                    当前标注任务为<b>甲骨文图片切割</b>标注。请在开始正式标注前<b>务必完成</b><br>（1）点击下方链接仔细阅读标注手册以便了解标注平台使用方法和标注技巧。<br>
+                    （2）完成标注练习，方可进行正式标注。<br>
+                    （3）如有疑问可直接与标注任务发布同学联系。
+                    <br>
+                    目前为标注第1阶段，阶段总进度为:<b>{{progress}}</b>%
+                <br>
+                    
+                </p>
+                <a href="/static/甲骨文标注指南.pdf" target="_blank">
+                    甲骨文标注指南.pdf
+                </a>
+                <hr class="my-4">
+                
+                请完成练习后进入标注
+                <br>
+                    <span>
+<!--                         <a class="btn btn-lg btn-info" href="/test" role="button">
+                            开始练习
+                        </a>
+                        <br><br> -->
+                        <a class="btn btn-lg {% if can_start %} btn-primary {% else %} btn-primary  {% end %}" href="{% if can_start %}/label{% else %}/#{% end %}" role="button">
+                            进入标注
+                        </a>
+                        <p>
+                            已完成 {{ num_group }} 组题.
+                        </p>
+                        <!-- <a class="btn btn-lg {% if can_start %} btn-primary {% else %} btn-primary  {% end %}" href="{% if can_start %}/modify?begin=0&end=5&bnid=-1{% else %}/#{% end %}" role="button">
+                            修改已做题目
+                        </a> -->
+                    </span>
+                    <!-- <span>
+                        {% if can_start %}
+                        <a class="btn btn-lg btn-primary " href="/#" id="retrytest" role="button">
+                            重做测试
+                        </a>
+                        {% else %}
+                        <a class="btn btn-lg btn-primary " href="/test" role="button">
+                            标注练习
+                        </a>
+                        {% end %}
+                        <p>
+                            已完成 {{ pass_test }}/8 组练习.
+                        </p>
+                    </span> -->
+                </hr>
+                
+            </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <h4>
+                        <!-- FAQ -->
+                    </h4>
+                </div>
+                {% for i, item in enumerate(faq) %}
+                <div class="row">
+                    <b>
+                        {{ i+1 }}. {{item[0]}}
+                    </b>
+                </div>
+                <div class="row">
+                    <p>
+                        {{item[1]}}
+                    </p>
+                </div>
+                {% end for %}
+                <!-- <div class="row">
+                    <p>
+                        欢迎加入微信群，方便与研究人员和开发人员讨论疑问、bug、劳务费结算等相关问题：
+                    </p>
+                    <br>
+                        <div style="text-align: center;">
+                            <span>
+                                <img src="/static/group2.jpg" style="width: 300px; height: 400px;">
+                                </img>
+                            </span>
+                            <span>
+                                <img src="/static/group3.jpg" style="width: 300px; height: 400px;">
+                                </img>
+                            </span>
+                        </div>
+                    </br>
+                </div> -->
+            </div>
+        </main>
+        <!-- <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" src="https://code.jquery.com/jquery-3.2.1.slim.min.js">
+        </script> -->
+        <script crossorigin="anonymous" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js">
+        </script>
+        <script crossorigin="anonymous" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js">
+        </script>
+    </body>
+    <script>
+            $(function() {
+                $('#retrytest').click(function() {
+            
+                $.ajax({
+                type: 'GET',
+                url: '/resettest',
+                data: [],
+                dataType: 'json',
+                async: false, // 注意这里改为异步才能成功赋值！
+                success: function(data) {
+                    alert("重置成功");
+                    location.reload("GET");
+                },
+                error: function(XMLResponse) {}
+                });
+                
+            });
+            });
+        </script>
+</html>

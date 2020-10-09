@@ -1,0 +1,40 @@
+CREATE TABLE answer  (
+  answer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  problem_id INT,
+  answer_content VARCHAR,
+  user_id INT,
+  time_second VARCHAR
+)
+
+CREATE TABLE feedback  (
+  feedback_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INT,
+  problem_id INT,
+  content VARCHAR
+)
+
+CREATE TABLE problem  (
+  group_id INT DEFAULT (0),
+  problem_id INT PRIMARY KEY,
+  problem_content VARCHAR,
+  state INT DEFAULT (0),
+  times INT DEFAULT (0)
+)
+
+CREATE TABLE users  (
+  id integer PRIMARY KEY NOT NULL,
+  name text NOT NULL,
+  pass text NOT NULL,
+  email text NOT NULL,
+  student_id number,
+  group_num INT DEFAULT (0),
+  pass_test INT DEFAULT (0),
+  wechat TEXT,
+  alipay TEXT,
+  valid_name TEXT
+)
+
+CREATE TABLE zombie  (
+  problem_id INT,
+  timestamp INT
+)
