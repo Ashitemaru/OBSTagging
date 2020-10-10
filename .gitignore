@@ -115,6 +115,7 @@ dmypy.json
 # Oversized pictures
 statics/context/
 statics/oracle/
+new book-result/
 
 # Data
 *.pyc
