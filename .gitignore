@@ -2,3 +2,6 @@
 __pycache__/
 
 statics/context/
+
+*.pyc
+dbn.db
