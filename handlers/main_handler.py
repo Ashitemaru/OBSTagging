@@ -151,14 +151,14 @@ class CheckNameHandler(RequestHandler):
 class LabelHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        
+
         # get user_id
         username = tornado.escape.xhtml_escape(self.current_user)
         user_id = int(self.get_secure_cookie("user_id").decode())
-        
+
         feed_dict = {}
         feed_dict['username'] = username
-        
+
         #problem_content为题面内容的json
         feed_dict['problem_content'], hash_code = data_provider.get_problem(user_id)
         print (feed_dict)
@@ -175,14 +175,14 @@ class LabelHandler(BaseHandler):
 class TestHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        
+
         # get user_id
         username = tornado.escape.xhtml_escape(self.current_user)
         user_id = int(self.get_secure_cookie("user_id").decode())
-        
+
         feed_dict = {}
         feed_dict['username'] = username
-        
+
         #1表示不是测试题
         feed_dict['test_type'] = 1
 
@@ -201,17 +201,17 @@ class TestHandler(BaseHandler):
         user_id = int(self.get_secure_cookie("user_id").decode())
         data = json.loads(self.request.body.decode('utf-8'))
         answers = data
-        
+
         if self.get_secure_cookie("hash_code") == None:
             self.write("2")
             return
 
         hash_code = self.get_secure_cookie("hash_code").decode()
-        
+
         data_provider.pass_test(user_id)
         self.clear_cookie("hash_code")
 
-        
+
 
 
 #接受答案
@@ -266,7 +266,7 @@ class SaveAnswerHandler(BaseHandler):
         user_id = int(self.get_secure_cookie("user_id").decode())
         data = json.loads(self.request.body.decode('utf-8'))
         answers = data
-        
+
         if self.get_secure_cookie("hash_code") == None:
             self.write("2")
             return
@@ -287,7 +287,7 @@ class SaveAnswerHandler(BaseHandler):
         else:
             #失败
             self.write("0")
-        
+
 
 #接受反馈
 class FeedBackHandler(BaseHandler):
@@ -318,7 +318,7 @@ class AdminHandler(BaseHandler):
         #     return
         users_info = data_provider.get_user_info(101)
         users_info_json = json.dumps(users_info).encode('utf-8').decode('unicode_escape')
-        
+
         self.write(users_info_json)
 
     def post(self):
@@ -326,7 +326,7 @@ class AdminHandler(BaseHandler):
         action = data['action']
         if action == "get_user_answer":
             pass
-        
+
         self.write(users_info_json)
 
 #接受反馈
@@ -364,6 +364,13 @@ class OutFeedbackHandler(BaseHandler):
         res = data_provider.get_feedback()
         self.write(json.dumps(res))
 
+
+class GetFeedbackHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        res = data_provider.get_feedback()
+
+
 class RootHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
@@ -374,7 +381,7 @@ class RootHandler(BaseHandler):
         userid = int(self.get_argument("userid"))
         begin = int(self.get_argument("begin"))
         end = int(self.get_argument("end"))
-        
+
         feed_dict = {}
         feed_dict['username'] = username
         feed_dict['test_type'] = 0
@@ -382,11 +389,11 @@ class RootHandler(BaseHandler):
         isrange = True
         if(end<=begin):
             self.write("参数错误")
-            return           
-            
+            return
+
         #problem_content为题面内容的json
         feed_dict['problem_content'], hash_code, feed_dict['problem_range'] = data_provider.get_problem_root(user_id, target_id, isrange, begin, end - begin, bnid)
-        
+
         self.set_secure_cookie("hash_code", hash_code)
 
         #没有符合条件的题返回None
@@ -400,7 +407,7 @@ class RootHandler(BaseHandler):
 class ModifyHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        
+
         # get user_id
         username = tornado.escape.xhtml_escape(self.current_user)
         user_id = int(self.get_secure_cookie("user_id").decode())
@@ -408,7 +415,7 @@ class ModifyHandler(BaseHandler):
         begin = int(self.get_argument("begin"))
         end = int(self.get_argument("end"))
         bnid = self.get_argument("bnid")
-        
+
         feed_dict = {}
         feed_dict['username'] = username
         #0表示不是测试题
@@ -418,16 +425,16 @@ class ModifyHandler(BaseHandler):
             isrange = True
             if(end<=begin):
                 self.write("参数错误")
-                return           
+                return
         elif(begin<0 or end<0):
             isrange = False
         else:
             self.write("参数错误")
             return
-            
+
         #problem_content为题面内容的json
         feed_dict['problem_content'], hash_code, feed_dict['problem_range'] = data_provider.get_problem_modify(user_id, isrange, begin, end-begin, bnid)
-        
+
 
         self.set_secure_cookie("hash_code", hash_code)
 
@@ -443,7 +450,7 @@ class ModifyHandler(BaseHandler):
         user_id = int(self.get_secure_cookie("user_id").decode())
         data = json.loads(self.request.body.decode('utf-8'))
         answers = data
-        
+
         if self.get_secure_cookie("hash_code") == None:
             self.write("2")
             return

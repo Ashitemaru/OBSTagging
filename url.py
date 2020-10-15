@@ -33,7 +33,8 @@ url = [
             (r'/rootall', RootHandler),
             (r'/outputu', GetAllUserHandler),
             #(r'/resettest', ResetTestHandler)
-            
+
+            (r'/get_feedback', GetFeedbackHandler),
             
             #(r'/statics/(.*)', tornado.web.StaticFileHandler, {'path': './statics/'}),
 
