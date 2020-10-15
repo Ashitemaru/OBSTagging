@@ -335,9 +335,11 @@ class OutPutHandler(BaseHandler):
     def get(self):
         user_id = int(self.get_secure_cookie("user_id").decode())
         print (user_id)
+        '''
         if user_id not in [1,2]:
             self.write('权限错误')
             return
+        '''
         data_provider.outputfile()
         self.write('输出完成,点击下载文件:<a href=\"/static/answers.json\">结果文件</a>')
 
@@ -354,9 +356,11 @@ class OutFeedbackHandler(BaseHandler):
     def get(self):
         user_id = int(self.get_secure_cookie("user_id").decode())
         print (user_id)
+        '''
         if user_id not in [1,2]:
             self.write('权限错误')
             return
+        '''
         res = data_provider.get_feedback()
         self.write(json.dumps(res))
 
