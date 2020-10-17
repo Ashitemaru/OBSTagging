@@ -341,7 +341,8 @@ class OutPutHandler(BaseHandler):
             return
         '''
         data_provider.outputfile()
-        self.write('输出完成,点击下载文件:<a href=\"/static/answers.json\">结果文件</a>')
+        # self.write('输出完成,点击下载文件:<a href=\"/static/answers.json\">结果文件</a>')
+        self.render("ans_output.html", data = "1")
 
 
 class GetAllUserHandler(BaseHandler):
