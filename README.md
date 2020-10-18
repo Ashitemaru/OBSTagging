@@ -7,43 +7,43 @@
 # 目录与文件结构
 
 .
-├── application.py
-├── dataprocess 数据预处理目录(从excel文件转为url encode的csv文件)
-│   ├── data.csv
-│   ├── data.xlsx
-│   ├── input.csv
-│   ├── pro.py 预处理程序
-│   ├── test.csv
-│   └── test.xlsx
-├── dbn.db 数据库文件
-├── handlers
-│   ├── __init__.py
-│   ├── data.py 业务层
-│   ├── db.py 数据库访问层，DAO层
-│   ├── main_handler.py Facade层(get post)
-├── import.sql csv导入数据库的sql脚本
-├── server.py 网站启动入口,可设置端口
-├── statics 网站静态文件目录
-│   ├── THUNLP 标注平台使用手册.pdf
-│   ├── css
-│   ├── faq.json
-│   ├── js
-│   │   ├── bootstrap.js
-│   │   ├── label.js 标注页js
-│   │   ├── md5.min.js
-│   │   ├── modify.js 修改答案页js
-│   │   └── test.js 练习题页js
-│   ├── robots.txt 禁止爬虫
-├── templates
-│   ├── index.html 首页
-│   ├── info.html 修改个人信息页面
-│   ├── label_sememe.html 正式标注页面
-│   ├── login.html 登录页面
-│   ├── md5.min.js
-│   ├── modify_sememe.html 修改题目
-│   ├── register.html 注册页面
-│   └── test_sememe.html 练习题页面
-├── url.py 路由控制
+├── application.py\
+├── dataprocess 数据预处理目录(从excel文件转为url encode的csv文件)\
+│   ├── data.csv\
+│   ├── data.xlsx\
+│   ├── input.csv\
+│   ├── pro.py 预处理程序\
+│   ├── test.csv\
+│   └── test.xlsx\
+├── dbn.db 数据库文件\
+├── handlers\
+│   ├── __init__.py\
+│   ├── data.py 业务层\
+│   ├── db.py 数据库访问层，DAO层\
+│   ├── main_handler.py Facade层(get post)\
+├── import.sql csv导入数据库的sql脚本\
+├── server.py 网站启动入口,可设置端口\
+├── statics 网站静态文件目录\
+│   ├── THUNLP 标注平台使用手册.pdf\
+│   ├── css\
+│   ├── faq.json\
+│   ├── js\
+│   │   ├── bootstrap.js\
+│   │   ├── label.js 标注页js\
+│   │   ├── md5.min.js\
+│   │   ├── modify.js 修改答案页js\
+│   │   └── test.js 练习题页js\
+│   ├── robots.txt 禁止爬虫\
+├── templates\
+│   ├── index.html 首页\
+│   ├── info.html 修改个人信息页面\
+│   ├── label_sememe.html 正式标注页面\
+│   ├── login.html 登录页面\
+│   ├── md5.min.js\
+│   ├── modify_sememe.html 修改题目\
+│   ├── register.html 注册页面\
+│   └── test_sememe.html 练习题页面\
+├── url.py 路由控制\
 
 # 网站使用
 
