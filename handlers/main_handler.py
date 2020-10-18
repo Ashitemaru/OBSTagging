@@ -369,6 +369,9 @@ class GetFeedbackHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         res = data_provider.get_feedback()
+        res.sort(key=lambda item: item[1])
+        feed_dict = {'feedbacks': res,'total_num': len(res)}
+        self.render("feedback.html", **feed_dict)
 
 
 class RootHandler(BaseHandler):

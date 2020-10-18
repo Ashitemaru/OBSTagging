@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>THUNLP Data Labeling Platform - THUNLP 数据标注平台</title>
+    <script src="https://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link rel="stylesheet" href="static/css/feedback.css">
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" rel="stylesheet"/>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <a class="navbar-brand" href="#">
+                THUNLP标注平台
+            </a>
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <span class="navbar-text active">
+
+             <a class="nav-link" href="/info?action=info">
+                账户信息
+            </a>
+            </span>
+            <span class="navbar-text active">
+
+                <a class="nav-link" href="/login?action=logout">
+                    注销
+                </a>
+            </span>
+    </nav>
+    <main class="container">
+    <h1>反馈信息</h1>
+    <p style="text-align: center">共有{{ total_num }}条反馈信息</p>
+    <div class="row">
+    {% for user_id,problem_id,feedback in feedbacks  %}
+
+            <div class="col-12">
+            <p>
+                问题编号：<span>{{ problem_id }}</span><span>&nbsp;</span>
+                用户编号：<span>{{ user_id }}</span><span>&nbsp;</span>
+            </p>
+            <p>反馈信息：<span>{{ feedback }}</span></p>
+
+            </div>
+
+    {% end %}
+    </div>
+    </main>
+    <script crossorigin="anonymous" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</body>
+</html>

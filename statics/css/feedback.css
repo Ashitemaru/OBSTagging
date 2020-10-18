@@ -1,0 +1,25 @@
+.col-12{
+    border-radius: 6px;
+    background-color: lightgray;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.navbar-brand {
+    color: #fff;
+    display: inline-block;
+/*    padding-top: .3125rem;
+    padding-bottom: .3125rem;*/
+    margin-right: 1rem;
+    /*font-size: 1.25rem;
+    line-height: inherit;*/
+    white-space: nowrap;
+}
+.nav-link {
+    color: #fff;
+    display: block;
+    padding: .5rem 1rem;
+    text-align: left;
+}
+.navbar-text {
+    color: #fff;
+}
