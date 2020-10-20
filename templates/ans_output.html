@@ -2,42 +2,50 @@
 <html lang="en">
     <!-- Headers -->
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <title>答案反馈与下载</title>
-
-        <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <style>
-            body {
-                padding-top: 40px;
-                padding-bottom: 40px;
-                background-color: #eee;
-            }
-
-            form {
-                padding: 15px;
-                margin: 0 auto;
-            }
-            form .form-control {
-                position: relative;
-                box-sizing: border-box;
-                height: auto;
-                padding: 10px;
-                font-size: 16px;
-            }
-            form .form-control:focus {
-                z-index: 2;
-            }
-            form input {
-                margin-bottom: 10px;
-            }
-        </style>
+        <meta charset="UTF-8">
+        <title>THUNLP Data Labeling Platform - THUNLP 数据标注平台</title>
+        <script src="https://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <link rel="stylesheet" href="static/css/feedback.css">
+        <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" rel="stylesheet">
+        <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" rel="stylesheet"/>
     </head>
 
     <body>
-        <p>输出完成,点击下载文件:<a href="/static/answers.json">结果文件</a></p>
-        <p>{{data}}</p>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <a class="navbar-brand" href="#">
+                THUNLP标注平台
+            </a>
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <span class="navbar-text active">
+
+             <a class="nav-link" href="/info?action=info">
+                账户信息
+            </a>
+            </span>
+            <span class="navbar-text active">
+
+                <a class="nav-link" href="/login?action=logout">
+                    注销
+                </a>
+            </span>
+        </nav>
+
+        <main class="container">
+            <h1>答题情况汇总</h1>
+            <p style="text-align: center">共有{{ total_num }}条答案反馈，点击下载json文件：<a href="/static/answers.json">答案文件</a></p>
+            {% for x in answer_data %}
+            <div class="col-12">
+                <p>
+                    问题编号：<span>{{ x['pid'] }}</span><span>&nbsp;</span>
+                    用户名称：<span>{{ x['name'] }}</span><span>&nbsp;</span>
+                    所用时间：<span>{{ x['time'] }}</span>秒<span>&nbsp;</span>
+                </p>
+                <p>给出答案：<span>{{ x['answer'] }}</span></p>
+    
+                </div>
+            {% end %}
+        </main>
     </body>
 </html>

@@ -334,7 +334,7 @@ class OutPutHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         user_id = int(self.get_secure_cookie("user_id").decode())
-        print (user_id)
+        print(user_id)
         '''
         if user_id not in [1,2]:
             self.write('权限错误')
@@ -342,7 +342,11 @@ class OutPutHandler(BaseHandler):
         '''
         data_provider.outputfile()
         # self.write('输出完成,点击下载文件:<a href=\"/static/answers.json\">结果文件</a>')
-        self.render("ans_output.html", data = "1")
+        with open("statics/answers.json") as answer_file:
+            answer_dicts = json.loads(answer_file.read())
+        
+        data_dict = {'answer_data': answer_dicts, 'total_num': len(answer_dicts)}
+        self.render("ans_output.html", **data_dict)
 
 
 class GetAllUserHandler(BaseHandler):
@@ -371,7 +375,7 @@ class GetFeedbackHandler(BaseHandler):
     def get(self):
         res = data_provider.get_feedback()
         res.sort(key=lambda item: item[1])
-        feed_dict = {'feedbacks': res,'total_num': len(res)}
+        feed_dict = {'feedbacks': res, 'total_num': len(res)}
         self.render("feedback.html", **feed_dict)
 
 
