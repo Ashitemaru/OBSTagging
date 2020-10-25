@@ -6,7 +6,7 @@
 
 # 目录与文件结构
 
-.
+
 ├── application.py\
 ├── dataprocess 数据预处理目录(从excel文件转为url encode的csv文件)\
 │   ├── data.csv\

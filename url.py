@@ -24,8 +24,8 @@ url = [
             (r'/change', ChangeAnswerHandler),
 
             #(r'/tree', GetTreeHandler),
-            (r'/outputt', OutPutHandler), # 随时下载answer表
-            (r'/outputf', OutFeedbackHandler), # 随时下载answer表
+            (r'/outputt', OutPutHandler), # 下载answer表，查看答题信息
+            (r'/outputf', OutFeedbackHandler), # 查看反馈
             (r'/feedback', FeedBackHandler),
             (r'/admin', AdminHandler),
             # (r'/test', TestHandler),
@@ -34,7 +34,7 @@ url = [
             (r'/outputu', GetAllUserHandler),
             #(r'/resettest', ResetTestHandler)
 
-            (r'/getfeedback', GetFeedbackHandler),
+            (r'/getanswer', GetAnswerHandler), # 查看答题页面
             
             #(r'/statics/(.*)', tornado.web.StaticFileHandler, {'path': './statics/'}),
 

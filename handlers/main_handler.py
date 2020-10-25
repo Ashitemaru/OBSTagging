@@ -367,16 +367,18 @@ class OutFeedbackHandler(BaseHandler):
             return
         '''
         res = data_provider.get_feedback()
-        self.write(json.dumps(res))
-
-
-class GetFeedbackHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        res = data_provider.get_feedback()
         res.sort(key=lambda item: item[1])
+        with open("./statics/feedback.json", "w") as f:
+            f.write(json.dumps(res))
         feed_dict = {'feedbacks': res, 'total_num': len(res)}
         self.render("feedback.html", **feed_dict)
+
+class GetAnswerHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        user_id = int(self.get_argument("userid"))
+        problem_id = int(self.get_argument("problemid"))
+
 
 
 class RootHandler(BaseHandler):
