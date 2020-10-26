@@ -343,9 +343,13 @@ class OutPutHandler(BaseHandler):
         data_provider.outputfile()
         # self.write('输出完成,点击下载文件:<a href=\"/static/answers.json\">结果文件</a>')
         with open("statics/answers.json") as answer_file:
-            answer_dicts = json.loads(answer_file.read())
+            raw_dicts = json.loads(answer_file.read())
+
+            raw_answer_strs = []
+            for x in raw_dicts:
+                raw_answer_strs.append(x.pop('answer'))
         
-        data_dict = {'answer_data': answer_dicts, 'total_num': len(answer_dicts)}
+        data_dict = {'usr_data': raw_dicts, 'answer': raw_answer_strs, 'total_num': len(raw_dicts)}
         self.render("ans_output.html", **data_dict)
 
 

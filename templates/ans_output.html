@@ -16,16 +16,13 @@
             <a class="navbar-brand" href="#">
                 THUNLP标注平台
             </a>
-            <ul class="navbar-nav mr-auto">
-            </ul>
+            <ul class="navbar-nav mr-auto"></ul>
             <span class="navbar-text active">
-
-             <a class="nav-link" href="/info?action=info">
-                账户信息
-            </a>
+                <a class="nav-link" href="/info?action=info">
+                    账户信息
+                </a>
             </span>
             <span class="navbar-text active">
-
                 <a class="nav-link" href="/login?action=logout">
                     注销
                 </a>
@@ -36,14 +33,13 @@
             <h1>答题情况汇总</h1>
             <p style="text-align: center">共有{{ total_num }}条答案反馈，点击下载json文件：<a href="/statics/answers.json">答案文件</a></p>
             {% for x in answer_data %}
-            <div class="col-12">
-                <p>
-                    问题编号：<span>{{ x['pid'] }}</span><span>&nbsp;</span>
-                    用户名称：<span>{{ x['name'] }}</span><span>&nbsp;</span>
-                    所用时间：<span>{{ x['time'] }}</span>秒<span>&nbsp;</span>
-                </p>
-                <p>给出答案：<span>{{ x['answer'] }}</span></p>
-    
+                <div class="col-12">
+                    <p>
+                        问题编号：<span>{{ x['pid'] }}</span><span>&nbsp;</span>
+                        用户名称：<span>{{ x['name'] }}</span><span>&nbsp;</span>
+                        所用时间：<span>{{ x['time'] }}</span>秒<span>&nbsp;</span>
+                    </p>
+                    <p>给出答案：<span>{{ x['pid'] }}</span></p>
                 </div>
             {% end %}
         </main>
