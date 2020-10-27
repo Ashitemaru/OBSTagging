@@ -204,6 +204,16 @@ class DataProvider:
 		problem_json = json.dumps(post_data).encode('utf-8').decode('unicode_escape')
 		return problem_json, hash_code
 
+	# 查看已做题答题信息
+	def get_problem_info(self, user_id, problem_id):
+		problem = self.db.get_problem_by_problem_id(problem_id)
+		problem_id, problem_content = problem[0]
+		problem_content = json.loads(problem_content)
+		answers = self.db.select('answer', keys=['answer_content'], conditions={'problem_id':problem_id,'user_id':user_id})
+		answers = answers[0][0].split(',')
+		problem = {'problem_id': problem_id, 'problem_content': problem_content, 'answer': answers}
+		return problem
+
 	def save_answer(self, user_id, answers, hash_code_session):
 		'''
 		retcode enum

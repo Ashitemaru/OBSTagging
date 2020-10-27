@@ -375,9 +375,14 @@ class OutFeedbackHandler(BaseHandler):
 
 class GetAnswerHandler(BaseHandler):
     @tornado.web.authenticated
-    def get(self):
-        user_id = int(self.get_argument("userid"))
-        problem_id = int(self.get_argument("problemid"))
+    def get(self, *args):
+        user_id = int(self.get_argument("user_id"))
+        problem_id = int(self.get_argument("problem_id"))
+        problem_answer = data_provider.get_problem_info(user_id, problem_id)
+        problem_answer =json.dumps(problem_answer)
+        feed_dict={'problem_content': problem_answer, 'problem_id': problem_id, 'user_id': user_id}
+        # feed_dict = {'problem_id': problem_id, 'problem_content': problem_answer['problem_content'], 'answer': problem_answer['answer'], 'user_id': user_id}
+        return self.render("answer.html", **feed_dict)
 
 
 

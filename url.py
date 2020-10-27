@@ -34,7 +34,7 @@ url = [
             (r'/outputu', GetAllUserHandler),
             #(r'/resettest', ResetTestHandler)
 
-            (r'/getanswer', GetAnswerHandler), # 查看答题页面
+            (r'/getanswer(.*)', GetAnswerHandler), # 查看答题页面 /(?P<problem_id>\d+)/(?P<user_id>\d+)
             
             #(r'/statics/(.*)', tornado.web.StaticFileHandler, {'path': './statics/'}),
 
