@@ -162,14 +162,21 @@ function processProblemContent(content) {
 
 function answer_pre(content) {
     var answer = [];
+    var old_char_num = 0;
+    var new_char_num = 0;
     answer.push('1');
     answer.push('1');
-    for (let i = 0; i < content.old_char.length; i++)
+    for (let i = 0; i < content.old_char.length; i++) {
+        old_char_num += content.old_char[i].length;
         for (let j = 0; j < content.old_char[i].length; j++) 
             answer.push('0');
-    for (let i = 0; i < content.new_char.length; i++)
+    }
+    for (let i = 0; i < content.new_char.length; i++) {
+        new_char_num += content.new_char[i].length;
         for (let j = 0; j < content.new_char[i].length; j++) 
             answer.push('0');
+    }
+    answer.unshift(old_char_num, new_char_num);
     return answer;
 }
 
@@ -199,27 +206,27 @@ function showQuestion(id) {
     $('polygon').attr('fill','gainsboro');
 
     let answer_temp = checkQues[g_activeQuestion_id].answer;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 2; i < 4; i++) {
         if(answer_temp[i]!=-1){
-            $('input[name=\'radio_' + i + '\'][value=' + answer_temp[i] + ']').attr("checked",true);
+            $('input[name=\'radio_' + (i - 2) + '\'][value=' + answer_temp[i] + ']').attr("checked",true);
         }
     }
-    for (let i = 2; i < answer_temp.length; i++)
-        setvalue('button'+(i-2), answer_temp[i]);
+    for (let i = 4; i < answer_temp.length; i++)
+        setvalue('button'+(i-4), answer_temp[i]);
 
 }
 
 function writeAnswer() {
-    for (let i = 0; i < 2; i++) {
-        let answer_id = $('input[name=\'radio_' + i + '\']:checked').val();
+    for (let i = 2; i < 4; i++) {
+        let answer_id = $('input[name=\'radio_' + (i - 2) + '\']:checked').val();
         if(answer_id == undefined) {
             alert('请完成本题目,完成后可跳转。')
             return false;
         }
         checkQues[g_activeQuestion_id].answer[i] = answer_id;
     }
-    for (let i = 2; i < checkQues[g_activeQuestion_id].answer.length; i++) {
-        let answer_id = $("[id='button" + (i-2)+ "']").attr('value');
+    for (let i = 4; i < checkQues[g_activeQuestion_id].answer.length; i++) {
+        let answer_id = $("[id='button" + (i-4)+ "']").attr('value');
         if(answer_id == undefined) {
             alert('请完成本题目,完成后可跳转。')
             return false;
@@ -332,6 +339,7 @@ $(function() {
         }
         var problem_no_finish = false;
         for(let i = 0; i < checkQues.length; i++){
+            // Why 7 ?
             if(checkQues[i].answer[7] == -1){
                 alert("第" + (i + 1) +"题未作答");
                 problem_no_finish = true;

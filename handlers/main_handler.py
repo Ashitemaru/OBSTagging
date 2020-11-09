@@ -345,12 +345,31 @@ class OutPutHandler(BaseHandler):
         with open("statics/answers.json") as answer_file:
             raw_dicts = json.loads(answer_file.read())
 
-            raw_answer_strs = []
             for x in raw_dicts:
-                raw_answer_strs.append(x.pop('answer'))
+                answer_list = x.pop('answer').split(',')
+                # Columns lost ?
+                old_char_col_lost = answer_list[2] == '1'
+                new_char_col_lost = answer_list[3] == '1'
+
+                old_char_num = int(answer_list[0])
+                new_char_num = int(answer_list[1])
+                # Answer starts from index 4
+                flag = 4
+                old_char_1_num = 0
+                new_char_1_num = 0
+
+                for i in range(old_char_num):
+                    old_char_1_num += int(answer_list[flag + i])
+                for i in range(new_char_num):
+                    new_char_1_num += int(answer_list[flag + old_char_num + i])
+
+                x['old_char_col_lost'] = old_char_col_lost
+                x['new_char_col_lost'] = new_char_col_lost
+                x['new_char_1_num'] = new_char_1_num
+                x['old_char_1_num'] = old_char_1_num
         
-        data_dict = {'usr_data': raw_dicts, 'answer': raw_answer_strs, 'total_num': len(raw_dicts)}
-        self.render("ans_output.html", **data_dict)
+        feed_dict = {'usr_data': raw_dicts, 'total_num': len(raw_dicts)}
+        self.render("ans_output.html", **feed_dict)
 
 
 class GetAllUserHandler(BaseHandler):

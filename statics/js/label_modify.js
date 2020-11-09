@@ -80,7 +80,7 @@ function processProblemContent(content) {
         html_str = html_str + '<h2>甲骨文</h2>' + "\n";
         for (let i = 0; i < content.old_char.length; i++) {
             html_str = html_str + "<div>";
-            for (let j = 0; j < content.old_char[i].length; j++) {
+            for (let j = 0; j < content.char[i].length; j++) {
                 let img_url = decodeURIComponent(content.old_char[i][j]);
                 let button_id = button_total.toString();
                 html_str = html_str + '<img id="button' + button_id + '" src="/static/'+img_url+'" width="8%" value = "0"/ onclick="changevalue(\'button'+ button_id + '\')"> &nbsp;';

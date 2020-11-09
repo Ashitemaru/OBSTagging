@@ -1,8 +1,9 @@
-.col-12{
+.col-12 {
     border-radius: 6px;
     background-color: lightgray;
     margin-bottom: 5px;
     margin-top: 5px;
+    padding: 5px;
 }
 .navbar-brand {
     color: #fff;
