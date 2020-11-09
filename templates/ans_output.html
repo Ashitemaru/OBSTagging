@@ -39,7 +39,26 @@
                         用户名称：<span>{{ x['name'] }}</span><span>&nbsp;</span>
                         所用时间：<span>{{ x['time'] }}</span>秒<span>&nbsp;</span>
                     </p>
-                    <p>给出答案：<span>{{ x['old_char_col_lost'] }}</span></p>
+                    <p>
+                        甲骨文中选择“是”的个数：<span>{{ x['old_char_1_num'] }}</span>&nbsp;
+                        现代文字中选择“是”的个数：<span>{{ x['new_char_1_num'] }}</span>&nbsp;
+                    </p>
+                    <p>
+                        <!-- 这部分写得太蠢了，但是就是有点不想动 -->
+                        甲骨文是否缺列：
+                        {% if x['old_char_col_lost'] %}
+                            <span>“是”</span>
+                        {% else %}
+                            <span>“否”</span>
+                        {% end %}
+                        &nbsp;
+                        现代文字是否缺列：
+                        {% if x['new_char_col_lost'] %}
+                            <span>“是”</span>
+                        {% else %}
+                            <span>“否”</span>
+                        {% end %}
+                    </p>
                 </div>
             {% end %}
         </main>
