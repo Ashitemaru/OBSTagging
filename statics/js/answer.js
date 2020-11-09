@@ -8,7 +8,7 @@ var g_activeTreeGroupId = 0;
 var g_MaxTreeId = 0;
 var g_MaxTreeGroupId = 0;
 
-var DISPALY_STATUS = {
+var DISPLAY_STATUS = {
     "DEFAULT": 0,
     "CONFIRM_SUBMIT": 1,
     "NEXT_OR_RETURN": 2
@@ -16,7 +16,7 @@ var DISPALY_STATUS = {
 
 var g_is_error_state = false;
 
-var status_now = DISPALY_STATUS.DEFAULT;
+var status_now = DISPLAY_STATUS.DEFAULT;
 var start_time_flag = 0;
 
 

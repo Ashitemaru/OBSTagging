@@ -8,7 +8,7 @@ var g_activeTreeGroupId = 0;
 var g_MaxTreeId = 0;
 var g_MaxTreeGroupId = 0;
 
-var DISPALY_STATUS = {
+var DISPLAY_STATUS = {
     "DEFAULT": 0,
     "CONFIRM_SUBMIT": 1,
     "NEXT_OR_RETURN": 2
@@ -16,7 +16,7 @@ var DISPALY_STATUS = {
 
 var g_is_error_state = false;
 
-var status_now = DISPALY_STATUS.DEFAULT;
+var status_now = DISPLAY_STATUS.DEFAULT;
 var start_time_flag = 0;
 
 
@@ -308,18 +308,18 @@ $(function() {
     //展示状态的转换，
     $('#myModal').on('show.bs.modal', function () {
             //用户正在confirm submit
-            status_now = DISPALY_STATUS.CONFIRM_SUBMIT;
+            status_now = DISPLAY_STATUS.CONFIRM_SUBMIT;
     });
     $('#myModal').on('hide.bs.modal', function () {
             //正在答题
-            status_now = DISPALY_STATUS.DEFAULT;
+            status_now = DISPLAY_STATUS.DEFAULT;
     });
     $('#myModal2').on('show.bs.modal', function () {
             //正在选择下一步还是返回
-            status_now = DISPALY_STATUS.NEXT_OR_RETURN;
+            status_now = DISPLAY_STATUS.NEXT_OR_RETURN;
     });
     $('#myModal2').on('hide.bs.modal', function () {
-            status_now = DISPALY_STATUS.DEFAULT;
+            status_now = DISPLAY_STATUS.DEFAULT;
     });
 
     //提交试卷
@@ -462,24 +462,24 @@ $(function() {
         switch (event.keyCode) {
             //右键
             case 0x27:
-                if(status_now == DISPALY_STATUS.DEFAULT)
+                if(status_now == DISPLAY_STATUS.DEFAULT)
                     {}
                 break;
             //左键
             case 0x25:
-                if(status_now == DISPALY_STATUS.DEFAULT)
+                if(status_now == DISPLAY_STATUS.DEFAULT)
                     {}
                 break;
             //y
             case 89:
                 switch (status_now){
-                    case DISPALY_STATUS.DEFAULT:
+                    case DISPLAY_STATUS.DEFAULT:
                         $('#item0').click();
                         break;
-                    case DISPALY_STATUS.CONFIRM_SUBMIT:
+                    case DISPLAY_STATUS.CONFIRM_SUBMIT:
                         $("#confirmSubmit").click();
                         break;
-                    case DISPALY_STATUS.NEXT_OR_RETURN:
+                    case DISPLAY_STATUS.NEXT_OR_RETURN:
                         $("#refresh").click()
                         break;
                 }
@@ -488,13 +488,13 @@ $(function() {
             //n
             case 78:
                 switch (status_now){
-                    case DISPALY_STATUS.DEFAULT:
+                    case DISPLAY_STATUS.DEFAULT:
                         $('#item1').click();
                         break;
-                    case DISPALY_STATUS.CONFIRM_SUBMIT:
+                    case DISPLAY_STATUS.CONFIRM_SUBMIT:
                         $("#myModal").modal("hide");
                         break;
-                    case DISPALY_STATUS.NEXT_OR_RETURN:
+                    case DISPLAY_STATUS.NEXT_OR_RETURN:
                         $("#returnToIndex").click()
                         break;
                 }
