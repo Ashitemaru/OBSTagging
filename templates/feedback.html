@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/#">
                 THUNLP标注平台
             </a>
             <ul class="navbar-nav mr-auto">
@@ -32,14 +32,14 @@
     </nav>
     <main class="container">
     <h1>反馈信息</h1>
-    <p style="text-align: center">共有{{ total_num }}条反馈信息，<a href="/statics/feedback.json">点此下载文件</a></p>
+    <p style="text-align: center">共有{{ total_num }}条反馈信息，<a href="/static/feedback.json">点此下载文件</a></p>
     <div class="row">
     {% for user_id,problem_id,feedback in feedbacks  %}
 
             <div class="col-12">
             <p>
                 问题编号：<span>{{ problem_id }}</span><span>&nbsp;</span>
-                用户编号：<span>{{ user_id }}</span><span>&nbsp;</span>
+                标注者编号：<span>{{ user_id }}</span><span>&nbsp;</span>
             </p>
             <p><a href="/getanswer?problem_id={{ problem_id }}&user_id={{ user_id }}">查看答题</a></p>
             <p>反馈信息：<span>{{ feedback }}</span></p>

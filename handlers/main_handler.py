@@ -402,9 +402,13 @@ class GetAnswerHandler(BaseHandler):
         user_id = int(self.get_argument("user_id"))
         problem_id = int(self.get_argument("problem_id"))
         problem_answer = data_provider.get_problem_info(user_id, problem_id)
-        problem_answer =json.dumps(problem_answer)
-        feed_dict={'problem_content': problem_answer, 'problem_id': problem_id, 'user_id': user_id}
-        # feed_dict = {'problem_id': problem_id, 'problem_content': problem_answer['problem_content'], 'answer': problem_answer['answer'], 'user_id': user_id}
+        problem_answer = json.dumps(problem_answer)
+        feedback_list = data_provider.get_feedback_info(user_id,problem_id)
+        if feedback_list is not None:
+            feedback = feedback_list[-1][0]
+        else:
+            feedback = '无'
+        feed_dict = {'problem_content': problem_answer, 'problem_id': problem_id, 'user_id': user_id, 'feedback': feedback}
         return self.render("answer.html", **feed_dict)
 
 

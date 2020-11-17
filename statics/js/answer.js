@@ -1,23 +1,15 @@
-var checkQues = []; //已做答的题的集合
-
+let q_data
 //g global 变量
 var g_group_id = 0;
 var g_hash_code = '';
-var g_activeQuestion_id = 0; //当前操作的考题编号
 var g_activeTreeGroupId = 0;
 var g_MaxTreeId = 0;
-var g_MaxTreeGroupId = 0;
 
 var DISPLAY_STATUS = {
     "DEFAULT": 0,
     "CONFIRM_SUBMIT": 1,
     "NEXT_OR_RETURN": 2
 };
-
-var g_is_error_state = false;
-
-var status_now = DISPLAY_STATUS.DEFAULT;
-var start_time_flag = 0;
 
 
 function deepCopy(obj){
@@ -83,7 +75,7 @@ function processProblemContent(content) {
             for (let j = 0; j < content.old_char[i].length; j++) {
                 let img_url = decodeURIComponent(content.old_char[i][j]);
                 let button_id = button_total.toString();
-                html_str = html_str + '<img id="button' + button_id + '" src="/static/'+img_url+'" width="8%" value = "0"/ onclick="changevalue(\'button'+ button_id + '\')"> &nbsp;';
+                html_str = html_str + '<img id="button' + button_id + '" src="/static/'+img_url+'" width="8%" value = "0"> &nbsp;';// 若要求可写 onclick="changevalue(\'button'+ button_id + '\')"
                 button_total = button_total + 1;
             }
             html_str = html_str + "</div><br/>" + "\n";
@@ -95,7 +87,7 @@ function processProblemContent(content) {
                 <div class="item-name"> 是否有缺列</div>\
                 <div class="radio-tile-group">\
                 <div class="input-container">\
-                  <input id="unrealted" class="radio-button" type="radio" name="radio_0" value="0" /> \
+                  <input id="unrealted" class="radio-button" type="radio" name="radio_0" value="0" readonly="readonly" disabled="disabled"/> \
                   <div class="radio-tile">\
                     <div class="icon unrealted-icon">\
                       \
@@ -104,7 +96,7 @@ function processProblemContent(content) {
                   </div>\
                 </div>\
                 <div class="input-container">\
-                  <input id="negative" class="radio-button" type="radio" name="radio_0" value="1" />\
+                  <input id="negative" class="radio-button" type="radio" name="radio_0" value="1" readonly="readonly" disabled="disabled"/>\
                   <div class="radio-tile">\
                     <div class="icon negative-icon">\
                       \
@@ -121,7 +113,7 @@ function processProblemContent(content) {
             for (let j = 0; j < content.new_char[i].length; j++) {
                 let img_url = decodeURIComponent(content.new_char[i][j]);
                 let button_id = button_total.toString();
-                html_str = html_str + '<img id="button' + button_id + '" src="/static/'+img_url+'" width="8%" value = "0"/ onclick="changevalue(\'button'+ button_id + '\')"> &nbsp;';
+                html_str = html_str + '<img id="button' + button_id + '" src="/static/'+img_url+'" width="8%" value = "0"> &nbsp;';// 若要求可写 onclick="changevalue(\'button'+ button_id + '\')"
                 button_total = button_total + 1;
             }
             html_str = html_str + "</div><br/>" + "\n";
@@ -133,7 +125,7 @@ function processProblemContent(content) {
                 <div class="item-name"> 是否有缺列</div>\
                 <div class="radio-tile-group">\
                 <div class="input-container">\
-                  <input id="unrealted" class="radio-button" type="radio" name="radio_1" value="0" /> \
+                  <input id="unrealted" class="radio-button" type="radio" name="radio_1" value="0" readonly="readonly" disabled="disabled"/> \
                   <div class="radio-tile">\
                     <div class="icon unrealted-icon">\
                       \
@@ -142,7 +134,7 @@ function processProblemContent(content) {
                   </div>\
                 </div>\
                 <div class="input-container">\
-                  <input id="negative" class="radio-button" type="radio" name="radio_1" value="1" />\
+                  <input id="negative" class="radio-button" type="radio" name="radio_1" value="1" readonly="readonly" disabled="disabled"/>\
                   <div class="radio-tile">\
                     <div class="icon negative-icon">\
                       \
@@ -160,31 +152,11 @@ function processProblemContent(content) {
     return html_str
 }
 
-function answer_pre(content) {
-    var answer = [];
-    answer.push('1');
-    answer.push('1');
-    for (let i = 0; i < content.old_char.length; i++)
-        for (let j = 0; j < content.old_char[i].length; j++)
-            answer.push('0');
-    for (let i = 0; i < content.new_char.length; i++)
-        for (let j = 0; j < content.new_char[i].length; j++)
-            answer.push('0');
-    return answer;
-}
-
 
 //展示考卷信息
 
 
 function showQuestion(id) {
-
-
-
-    if (g_activeQuestion_id != undefined) {
-        $("#ques" + g_activeQuestion_id).removeClass("question_id").addClass("active_question_id");
-    } // 把当前选中的题目的题号方框加上已经过选择过的类型
-    g_activeQuestion_id = id;
     $(".question").find(".question_info").remove(); //移除所有选项
 
     let question_display = q_data.problem_content;
@@ -199,7 +171,7 @@ function showQuestion(id) {
 
     $('polygon').attr('fill','gainsboro');
 
-    let answer_temp = checkQues[g_activeQuestion_id].answer;
+    let answer_temp = q_data.answer//checkQues[g_activeQuestion_id].answer;
     for (let i = 0; i < 2; i++) {
         if(answer_temp[i]!=-1){
             $('input[name=\'radio_' + i + '\'][value=' + answer_temp[i] + ']').attr("checked",true);
@@ -210,86 +182,14 @@ function showQuestion(id) {
 
 }
 
-function writeAnswer() {
-    for (let i = 0; i < 2; i++) {
-        let answer_id = $('input[name=\'radio_' + i + '\']:checked').val();
-        if(answer_id == undefined) {
-            alert('请完成本题目,完成后可跳转。')
-            return false;
-        }
-        checkQues[g_activeQuestion_id].answer[i] = answer_id;
-    }
-    for (let i = 2; i < checkQues[g_activeQuestion_id].answer.length; i++) {
-        let answer_id = $("[id='button" + (i-2)+ "']").attr('value');
-        if(answer_id == undefined) {
-            alert('请完成本题目,完成后可跳转。')
-            return false;
-        }
-        checkQues[g_activeQuestion_id].answer[i] = answer_id;
-    }
-    return true;
-}
-
-/*答题卡*/
-function answerCard() {
-    $(".question_sum").text(q_data.problem_list.length); //
-    for (let i = 0; i < q_data.problem_list.length; i++) {
-        var questionId = "<li id='ques" + i + "'onclick='saveQuestionState(" + i + ")' class='questionId'>" + (i + 1) + "</li>";
-        $("#answerCard ul").append(questionId); // 把题号方框放到答题卡这个div中
-    }
-}
-
-/*设置进度条*/
-function progress() {
-    var prog = ($(".active_question_id").length + 1) / q_data.problem_list.length;
-    var pro = $("#problem_progress").parent().width() * prog;
-    //$(".progres").text((prog*100).toString().substr(0,5)+"%")
-    $("#problem_progress").animate({
-        width: pro,
-        opacity: 0.5
-    }, 1000);
-    console.log($(".active_question_id").length);
-}
-
-/*保存考题状态 已做答的状态*/
-function saveQuestionState(clickId) { // 在答题卡上点击某道题可以跳转
-    writeAnswer();
-    showQuestion(clickId);
-}
-
-function addTime() {
-    checkQues[g_activeQuestion_id].cost_time += 0.1;
-}
-
 // 主函数：当 DOM（文档对象模型） 已经加载，并且页面（包括图像）已经完全呈现时，会发生 ready 事件
 $(function() {
     //调整答题面板位置
     $(".middle-top-left").width($(".middle-top").width() - $(".middle-top-right").width())
     $(".problem_progress-left").width($(".middle-top-left").width() - 200);
     //标注结束
-    if($('#q_data').attr('value') == 'END'){
-        alert("感谢您的努力，您的标注任务已结束");
-        location.href = "/";
-    }
-
     q_data = JSON.parse($('#q_data').attr('value'));
     // console.log(q_data);
-
     $('#q_data').remove();
-
-
-    //let problem_list = q_data.problem_list;
-
-    // 初始化答案信息
-    /*for (let i = 0; i < problem_list.length; i++) {
-        var answerTMP = {};
-        answerTMP.id = i; //获取当前考题的编号
-        answerTMP.actualId = problem_list[i].problem_id;
-        answerTMP.answer = answer_pre(problem_list[i].problem_content);
-        answerTMP.cost_time = 0.0;
-        checkQues.push(answerTMP);
-    }*/
-    //progress(); // 设置进度条
-    //answerCard(); // 显示最下方的答题卡
     showQuestion(0); // 显示第一题
 })

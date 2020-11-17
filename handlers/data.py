@@ -209,10 +209,15 @@ class DataProvider:
 		problem = self.db.get_problem_by_problem_id(problem_id)
 		problem_id, problem_content = problem[0]
 		problem_content = json.loads(problem_content)
-		answers = self.db.select('answer', keys=['answer_content'], conditions={'problem_id':problem_id,'user_id':user_id})
+		answers = self.db.select('answer', keys=['answer_content'], conditions={'problem_id': problem_id, 'user_id': user_id})
 		answers = answers[0][0].split(',')
 		problem = {'problem_id': problem_id, 'problem_content': problem_content, 'answer': answers}
 		return problem
+
+	# 查看已做题反馈信息
+	def get_feedback_info(self, user_id, problem_id):
+		feedback = self.db.select('feedback', keys=['content'], conditions={'problem_id': problem_id, 'user_id': user_id})
+		return feedback
 
 	def save_answer(self, user_id, answers, hash_code_session):
 		'''
