@@ -340,6 +340,7 @@ class DataProvider:
 			uname = id2user[uid]
 			data = {}
 			data['name'] = uname
+			data['uid'] = uid
 			data['pid'] = pid
 			data['time'] = time_second
 			data['answer'] = answer_content

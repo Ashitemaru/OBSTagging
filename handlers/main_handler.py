@@ -367,6 +367,8 @@ class OutPutHandler(BaseHandler):
                 x['new_char_col_lost'] = new_char_col_lost
                 x['new_char_1_num'] = new_char_1_num
                 x['old_char_1_num'] = old_char_1_num
+
+                print(x)
         
         feed_dict = {'usr_data': raw_dicts, 'total_num': len(raw_dicts)}
         self.render("ans_output.html", **feed_dict)
